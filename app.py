@@ -146,10 +146,17 @@ if user_input:
     st.success(response["answer"])
 
 #  SHOW HISTORY 
-
-
 history = get_session_history(session_id)
 
-with st.expander("Chat History"):
-    for msg in history.messages:
-        st.markdown(f"**{msg.type.upper()}**: {msg.content}")
+with st.sidebar:
+    st.subheader("🕘 Chat History")
+
+    if not history.messages:
+        st.caption("No messages yet.")
+    else:
+        for msg in history.messages:
+            if msg.type == "human":
+                st.markdown(f"**🧑 You:** {msg.content}")
+            else:
+                st.markdown(f"**🤖 Assistant:** {msg.content}")
+
